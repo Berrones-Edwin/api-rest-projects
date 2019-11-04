@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\User;
+
 
 class ProjectController extends Controller
 {
@@ -17,10 +18,14 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         // return User::paginate(5);
+
+        // $user = Auth:user();
+
         if(!$request->isJson())
             return response()->json(['error'=>'Format not valid'],406);
         
         return Project::paginate(5);
+
         
     }
 
