@@ -20,11 +20,15 @@ use Illuminate\Http\Request;
 // Route::group(['prefix'=>'admin','namespace'=>'Admin','middleware'=>['auth', 'superadmin']],function(){
 //http://localhost:8080/Laravel/apiRest/public/api/v1/
 
-Route::post('v1/auth/login','UserController@login');
-Route::post('v1/auth/refresh','UserController@refresh'); //debe estar protegida
-Route::get('v1/auth/logout','UserController@logout'); //debe estar protegida
+Route::group(['prefix'=>'v1'],function(){
 
-Route::group(['prefix'=>'v1','middleware'=>['jwt.auth']],function(){
+    Route::post('auth/login','UserController@login');
+    Route::post('auth/register','UserController@register');
+
+    Route::post('auth/refresh','UserController@refresh'); //debe estar protegida
+    Route::get('auth/logout','UserController@logout'); //debe estar protegida
+});
+Route::group(['prefix'=>'v1','middleware'=>['jwt.verify']],function(){
     
 
     Route::get('projects','ProjectController@index')->name('project.index');
